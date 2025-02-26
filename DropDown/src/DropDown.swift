@@ -172,6 +172,7 @@ public final class DropDown: UIView {
 	}
 
 	//MARK: Constraints
+    public var maxHeight: CGFloat?
 	fileprivate var heightConstraint: NSLayoutConstraint!
 	fileprivate var widthConstraint: NSLayoutConstraint!
 	fileprivate var xConstraint: NSLayoutConstraint!
@@ -578,9 +579,15 @@ extension DropDown {
 		xConstraint.constant = layout.x
 		yConstraint.constant = layout.y
 		widthConstraint.constant = layout.width
-		heightConstraint.constant = layout.visibleHeight
-
-		tableView.isScrollEnabled = layout.offscreenHeight > 0
+        if let maxHeight = self.maxHeight,
+           layout.visibleHeight > maxHeight {
+            heightConstraint.constant = maxHeight
+            yConstraint.constant = layout.y + (layout.visibleHeight - maxHeight)
+            tableView.isScrollEnabled = true
+        }else {
+            heightConstraint.constant = layout.visibleHeight
+            tableView.isScrollEnabled = layout.offscreenHeight > 0
+        }
 
 		DispatchQueue.main.async { [weak self] in
 			self?.tableView.flashScrollIndicators()
