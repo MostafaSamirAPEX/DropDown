@@ -726,7 +726,7 @@ extension DropDown {
 		let y = anchorViewY + bottomOffset.y
 		
 		let maxY = y + tableHeight
-        let windowMaxY = window.safeAreaInsets.bottom - DPDConstant.UI.HeightPadding - offsetFromWindowBottom
+        let windowMaxY = window.bounds.maxY - DPDConstant.UI.HeightPadding - offsetFromWindowBottom
 		
 		let keyboardListener = KeyboardListener.sharedInstance
 		let keyboardMinY = keyboardListener.keyboardFrame.minY - DPDConstant.UI.HeightPadding
